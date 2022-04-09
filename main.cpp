@@ -6,50 +6,74 @@
 
 // This program outputs the message "Hello, World!" to the monitor
 
-#include "std_lib_facilities.h"
-#include "Animal.h"
-#include "Emoji.h"
-#include "AnimationWindow.h"
+#include "DynamicMemory.h"
+#include "Matrix.h"
+#include <iostream>
+#include "Dummy.h"
 
 //------------------------------------------------------------------------------'
 
-//definer str vindu og emoji
-constexpr int xmax = 1000;
-constexpr int ymax = 600;
-constexpr int emojiRadius = 50;
-
-void drawEmojis(vector<unique_ptr<Emoji>>& emojis, AnimationWindow& win) {
-	/*for (int i = 0; emojis.size(); ++i) {
-		emojis.at(i) -> draw(win);
-	}*/
-
-	for (auto it = emojis.begin(); it < emojis.end(); ++it)
-	 {
-	 	(*it)->draw(win);
-	 }
-
-}
-
+// C++ programs start by executing the function main
 int main()
 {
-	//testAnimal();
+	// Oppgave 1
+	{
+		createFibonacci();
+	}
 
-	const Point tl{100, 100};
-	const string win_label{"Emoji factory"};
-	AnimationWindow win{tl.x, tl.y, xmax, ymax, win_label};
-	
-	vector<unique_ptr<Emoji>> es;
-	//new konstruerer nytt objekt på "denne" adressen
-	es.emplace_back(new SmilingFace { Point {xmax / 2 - emojiRadius, ymax / 2 - emojiRadius}, emojiRadius});
-	es.emplace_back(new SadFace { Point {xmax / 2 + emojiRadius, ymax / 2 - emojiRadius}, emojiRadius});
-	es.emplace_back(new SurprisedFace { Point {xmax / 2 - emojiRadius, ymax / 2 + emojiRadius}, emojiRadius});
-	es.emplace_back(new AngryFace { Point {xmax / 2 + emojiRadius, ymax / 2 + emojiRadius}, emojiRadius});
-	es.emplace_back(new NeutralFace { Point {xmax / 2 + 3 * emojiRadius, ymax / 2 - emojiRadius}, emojiRadius});
-	es.emplace_back(new WinkFace { Point { xmax / 2 + 3 * emojiRadius, ymax / 2 + emojiRadius}, emojiRadius});
+	// Oppgave 2
+	{
+		Matrix A(4, 2);
+		Matrix B(4);
 
-	drawEmojis(es, win);
+		std::cout << A << '\n';
+		std::cout << B << '\n';
 
-	win.wait_for_close();
+		B.set(2, 3, 5.0);
+		std::cout << B << '\n';
+
+		std::cout << B.get(2, 3) << '\n';
+	}
+
+	//Oppgave 3
+	{
+		dummyTest();
+	}
+
+	// Oppgave 4 og 5
+	{
+	Matrix A(2), B(2), C(2);
+	A.set(0, 0, 1.0);
+	A.set(0, 1, 2.0);
+	A.set(1, 0, 3.0);
+	A.set(1, 1, 4.0);
+
+	B.set(0, 0, 4.0);
+	B.set(0, 1, 3.0);
+	B.set(1, 0, 2.0);
+	B.set(1, 1, 1.0);
+
+	C.set(0, 0, 1.0);
+	C.set(0, 1, 3.0);
+	C.set(1, 0, 1.5);
+	C.set(1, 1, 2.0);
+
+	std::cout << "A = \n" << A << '\n';
+	std::cout << "B = \n" << B << '\n';
+	std::cout << "C = \n" << C << '\n';
+
+	A += (B + C);
+	std::cout << "A + B + C = \n" << A << '\n';
+	std::cout << "B = \n" << B << '\n';
+	std::cout << "C = \n" << C << '\n';
+
+	Matrix D = A * B;
+	C *= C;
+	std::cout << "D = A * B\n" << D << '\n';
+	std::cout << "A = \n" << A << '\n';
+	std::cout << "B = \n" << B << '\n';
+	std::cout << "C *= C \n" << C << '\n';
+	}
 }
 
 //------------------------------------------------------------------------------
